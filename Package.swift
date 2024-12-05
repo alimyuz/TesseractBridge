@@ -1,24 +1,38 @@
-// swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
     name: "TesseractKit",
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "TesseractKit",
             targets: ["TesseractKit"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
+        .systemLibrary(name: "CTesseract", pkgConfig: "tesseract"),
+        .systemLibrary(name: "CLeptonica", pkgConfig: "lept"),
+        
         .target(
-            name: "TesseractKit"),
+            name: "TesseractKit",
+            dependencies: [
+                "CTesseract",
+                "CLeptonica",
+            ],
+            path: "Sources/TesseractKit",
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]
+        ),
         .testTarget(
             name: "TesseractKitTests",
-            dependencies: ["TesseractKit"]
-        ),
+            dependencies: ["TesseractKit"],
+            path: "Tests/TesseractKitTests",
+            resources: [
+                .process("resources/.")
+            ],
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ]
+        )
     ]
 )
