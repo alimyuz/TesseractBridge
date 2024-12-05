@@ -2,31 +2,30 @@
 import PackageDescription
 
 let package = Package(
-    name: "TesseractKit",
+    name: "TesseractBridge",
     products: [
         .library(
-            name: "TesseractKit",
-            targets: ["TesseractKit"]),
+            name: "TesseractBridge",
+            targets: ["TesseractBridge"]),
     ],
     targets: [
         .systemLibrary(name: "CTesseract", pkgConfig: "tesseract"),
         .systemLibrary(name: "CLeptonica", pkgConfig: "lept"),
         
         .target(
-            name: "TesseractKit",
+            name: "TesseractBridge",
             dependencies: [
                 "CTesseract",
                 "CLeptonica",
             ],
-            path: "Sources/TesseractKit",
             swiftSettings: [
                 .interoperabilityMode(.Cxx),
             ]
         ),
         .testTarget(
-            name: "TesseractKitTests",
-            dependencies: ["TesseractKit"],
-            path: "Tests/TesseractKitTests",
+            name: "TesseractBridgeTests",
+            dependencies: ["TesseractBridge"],
+            path: "Tests/TesseractBridgeTests",
             resources: [
                 .process("resources/.")
             ],
