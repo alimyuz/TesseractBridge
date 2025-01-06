@@ -1,10 +1,5 @@
 module CTesseract [system] {
     umbrella header "tesseract.h"
     link "tesseract"
-//    link "lept"
+    export *
 }
-
-//module CLeptonica [system] {
-//    umbrella header "leptonica.h"
-//    link "lept"
-//}
