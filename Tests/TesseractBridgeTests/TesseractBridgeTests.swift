@@ -1,6 +1,7 @@
 import Testing
 import Foundation
-import TesseractBridge
+import CLeptonica
+import CTesseract
 
 @Test func recognize() async throws {
     let api = try #require(TessBaseAPICreate())
@@ -14,10 +15,6 @@ import TesseractBridge
     
     let pix = try #require(pixRead(filePath))
     TessBaseAPISetImage2(api, pix)
-    defer {
-        var optionalPix = Optional(pix) // looks weird but needed
-        pixDestroy(&optionalPix)
-    }
     
     #expect(TessBaseAPIRecognize(api, nil) == 0)
     
